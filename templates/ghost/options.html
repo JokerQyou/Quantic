@@ -1,0 +1,32 @@
+{% include 'ghost/general_meta.html' %}
+<body>
+{% include 'ghost/nav_bar.html' %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 edit-main">
+      <form id="options-form" class="form-horizontal" action="/ghost/saveoptions/" method="post" accept-charset="utf-8">
+        {% csrf_token %}
+        {% for option in options %}
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="opt-{{forloop.counter}}">{{option.text}}</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="opt-{{forloop.counter}}" name="{{option.name}}" value="{{option.value}}" placeholder="Value" required>
+          </div>
+        </div>
+        {% endfor %}
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2" id="msg"></div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary btn-block">保存</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% include 'blog/footer.html' %}
+{% include 'ghost/foot.html' %}

@@ -1,0 +1,51 @@
+<!-- Pager start -->
+<div class="text-center home-pager">
+<ul class="pagination">
+    {% ifequal pager.current 1 %}
+    <li class="disabled active">
+        <a title="已是第一页">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        </a>
+    </li>
+    {% else %}
+    <li>
+        <a href="{{pager.prefix}}1" title="第一页">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        </a>
+    </li>
+    {% endifequal %}
+
+    {% for page in pager.pages %}
+
+        {% ifequal page.number pager.current %}
+        <li class="active">
+            <a href="{{pager.prefix}}{{page.number}}">
+                {{page.number}}
+            </a>
+        </li>
+        {% else %}
+        <li>
+            <a href="{{pager.prefix}}{{page.number}}">
+                {{page.number}}
+            </a>
+        </li>
+        {% endifequal %}
+
+    {% endfor %}
+
+    {% ifequal pager.current pager.total %}
+    <li class="active disabled">
+        <a title="已是最后一页">
+            <i class="glyphicon glyphicon-chevron-right"></i>
+        </a>
+    </li>
+    {% else %}
+    <li>
+        <a href="{{pager.prefix}}{{pager.total}}" title="最后一页">
+            <i class="glyphicon glyphicon-chevron-right"></i>
+        </a>
+    </li>
+    {% endifequal %}
+</ul>
+</div>
+<!-- Pager end -->

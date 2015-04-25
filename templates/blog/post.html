@@ -1,0 +1,70 @@
+{% include 'blog/general_meta.html' %}
+<body>
+{% include 'blog/nav_bar.html' %}
+  <div class="container">
+
+    <div class="blog-header">
+      <h1 class="blog-title">{{site_name}}</h1>
+      <p class="lead blog-description">{{site_description}}</p>
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-8 blog-main">
+
+        <div class="blog-post">
+          <h2 class="blog-post-title">{{title}}</h2>
+          <p class="blog-post-meta">
+              <i class="glyphicon glyphicon-user"></i>
+              <a href="#">{{author.name}}</a>
+              <i class="glyphicon glyphicon-time"></i>
+              {{time|date:"Y年m月d日 H:i:s"}}
+              <button id="post-qrcode-gen" type="button" class="btn btn-default pull-right" data-toggle="modal" data-target="#post-qrcode-modal" title="生成此页的二维码">
+                <i class="glyphicon glyphicon-qrcode"></i>
+              </button>
+          </p>
+
+          {{content|safe}}
+
+
+        </div><!-- /.blog-post -->
+
+        {% if tags %}
+        <div class="well well-sm blog-post-tags">
+            <wb:share-button appkey="1909857917" addition="number" type="button" picture_search="false" ralateUid="2726472413" pic="http%3A%2F%2Fnookstatic.qiniudn.com%2Fstaticfavicon.png" class="wb-share pull-right"></wb:share-button>
+          {% for tag in tags %}
+          <a href="{{site_url}}tag/{{tag.text}}">
+            <span class="post-tag label label-primary">
+              <i class="glyphicon glyphicon-tag"></i>
+              {{tag.text}}
+            </span>
+          </a>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {% include 'blog/comments.html' %}
+      </div><!-- /.blog-main -->
+
+      {% include 'blog/sidebar.html' %}
+    </div><!-- /.row -->
+
+  </div><!-- /.container -->
+  <!-- Post QR code model -->
+  <div class="modal fade" id="post-qrcode-modal" tabindex="-1" role="dialog" aria-labelledby="post-qrcode-label" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="post-qrcode-label">本页的二维码</h4>
+        </div>
+        <div class="modal-body" id="post-qrcode">
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div><!-- PostQR code model -->
+{% include 'blog/footer.html' %}
+</body>
+{% include 'blog/foot.html' %}

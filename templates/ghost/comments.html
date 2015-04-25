@@ -1,0 +1,59 @@
+{% include 'ghost/general_meta.html' %}
+<body>
+{% include 'ghost/nav_bar.html' %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 edit-main">
+      <div class="list-group post-comments">
+        {% for comment in comments %}
+        <div class="list-group-item comment">
+          <a class="comment-avatar pull-left" href="{% if comment.author.url %}{{comment.author.url}}{% else %}javascript:void(0){% endif %}">
+            <img src="//www.gravatar.com/avatar" alt="Avatar of {{comment.author.name}}">
+          </a>
+          <div class="content">
+            <i class="glyphicon glyphicon-user"></i>
+            <a class="author" href="{% if comment.author.url %}{{comment.author.url}}{% else %}javascript:void(0){% endif %}" target="_blank" rel="nofollow">{{comment.author.name}}</a>评论于
+            <a class="post-info" href="{{postprefix}}{{comment.post.slug}}" target="_blank">《{{comment.post.title}}》</a>下
+            <div class="metadata">
+              <div class="date">
+                <i class="glyphicon glyphicon-time"></i>
+                {{comment.time|date:'Y年m月d日 H:i:s'}}
+                {% if comment.spam %}
+                <span class="label label-danger">垃圾评论</span>
+                <button type="button" data-action="notaspam" data-commentid="{{comment.id}}" class="reportspam btn btn-xs btn-success pull-right">不是垃圾评论</button>
+                {% else %}
+                <span class="label label-success">正常</span>
+                <button type="button" data-action="itsaspam" data-commentid="{{comment.id}}" class="reportspam btn btn-xs pull-right">举报垃圾评论</button>
+                {% endif %}
+                <button type="button" data-action="delcomment" data-commentid="{{comment.id}}" class="delcomment btn btn-xs pull-right">删除评论</button>
+              </div>
+            </div>
+            <div class="text">{{comment.content}}</div>
+          </div>
+          <div class="msg"></div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="text-center">
+        <ul class="pagination">
+          {% if pager.prev %}
+          <li><a href="/ghost/comments/page/{{pager.prev}}/">{{pager.prev}}</a></li>
+          {% endif %}
+          <li class="active"><a href="/ghost/comments/page/{{pager.current}}/">{{pager.current}}</a></li>
+          {% if pager.next %}
+          <li><a href="/ghost/comments/page/{{pager.next}}/">{{pager.next}}</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+var SPAM_REPORT = '/ghost/comments/reportspam/';
+var COMMENT_DELETE = '/ghost/comments/delete/';
+</script>
+
+{% include 'blog/footer.html' %}
+{% include 'ghost/foot.html' %}

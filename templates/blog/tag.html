@@ -1,0 +1,41 @@
+{% include 'blog/general_meta.html' %}
+<body>
+{% include 'blog/nav_bar.html' %}
+    <div class="container">
+
+      <div class="blog-header">
+        <h1 class="blog-title">{{site_name}}</h1>
+        <p class="lead blog-description">{{site_description}}</p>
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-8 blog-main">
+          <p class="bg-info">
+              按标签检索时不显示文章内容。要精确定位文章，请使用搜索功能。
+          </p>
+          <div class="list-group post-by-tag">
+          {% for post in posts %}
+          <div class="list-group-item">
+            <a href="{{postprefix}}{{post.slug}}">
+                <h4 class="list-group-item-heading">{{post.title}}</h4>
+                <p class="list-group-item-text">
+                    <i class="glyphicon glyphicon-user"></i>
+                    {{post.author.name}}
+                    <i class="glyphicon glyphicon-time"></i>
+                    {{post.time|date:"Y年m月d日 H:i:s"}}
+                </p>
+            </a>
+          </div><!-- /.blog-post -->
+          {% endfor %}
+          </div>
+
+        </div><!-- /.blog-main -->
+
+        {% include 'blog/sidebar.html' %}
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+{% include 'blog/footer.html' %}
+</body>
+{% include 'blog/foot.html' %}

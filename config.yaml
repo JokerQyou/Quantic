@@ -1,0 +1,28 @@
+name: nook
+version: 1
+libraries:
+- name: "django"
+  version: "1.5"
+- name: "markdown"
+  version: "2.4"
+- name: "pygments"
+  version: "1.6"
+handlers:
+- url: /static/favicon.png
+  static_path: ./webot/staticfavicon.png
+- url: /robots.txt
+  static_path: ./static/robots.txt
+- url: /blog/favicon.ico
+  static_path: ./favicon.ico
+handle:
+- compress: if ( out_header["Content-type"] ~ "text/css" ) compress
+- compress: if ( out_header["Content-type"] ~ "text/javascript" ) compress
+- compress: if ( out_header["Content-type"] ~ "application/javascript" ) compress
+- compress: if ( out_header["Content-type"] ~ "text/html" ) compress
+- compress: if ( out_header["Content-type"] ~ "text/plain" ) compress
+- compress: if ( out_header["Content-type"] ~ "application/xml" ) compress
+- compress: if ( out_header["Content-type"] ~ "application/xhtml+xml" ) compress
+cron:
+- description: Blog comment spam checker
+  url: /blog/comment/check/
+  schedule: every 1 hours

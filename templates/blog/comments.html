@@ -1,0 +1,81 @@
+<!-- Comments start -->
+<div class="list-group post-comments">
+{% if comments %}
+{% for comment in comments %}
+  <div class="list-group-item comment">
+    <a class="comment-avatar pull-left" href="{% if comment.author.url %}{{comment.author.url}}{% else %}javascript:void(0){% endif %}">
+      <img src="{{comment.author.gravatar}}" alt="Avatar of {{comment.author.name}}">
+    </a>
+    <div class="content">
+      <i class="glyphicon glyphicon-user"></i>
+      <a class="author" href="{% if comment.author.url %}{{comment.author.url}}{% else %}javascript:void(0){% endif %}">{{comment.author.name}}</a>
+      <a href="javascript:void(0)" data-username="{{comment.author.name}}" class="reply pull-right">回复TA</a>
+      <div class="metadata">
+        <div class="date">
+          <i class="glyphicon glyphicon-time"></i>
+          {{comment.time|date:"Y年m月d日 H:i:s"}}
+        </div>
+      </div>
+      <div class="text">
+        {{comment.content}}
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% else %}
+  <div class="list-group-item comment">
+    <p class="bg-info">啊 (&gt;_&lt;) 还没有人发表过评论呢，来抢沙发吧～ </p>
+   </div>
+{% endif %}
+
+{# Comment form #}
+<div class="panel panel-default">
+<form id="comment-form" class="form-horizontal" role="form" action="{{site_url}}comment/" method="post" accept-charset="utf-8">
+  {% csrf_token %}
+  <input type="hidden" name="postid" value="{{id}}">
+  <!-- Name -->
+  <div class="form-group">
+    <label for="inputName" class="col-sm-2 control-label">您的昵称</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="inputName" type="text" name="name" placeholder="输入昵称（必需）" required>
+    </div>
+  </div>
+  <!-- Email -->
+  <div class="form-group">
+    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="inputEmail" type="email" name="email" placeholder="输入Email（必需）" required>
+    </div>
+  </div>
+  <!-- URL -->
+  <div class="form-group">
+    <label for="inputUrl" class="col-sm-2 control-label">您的网址</label>
+    <div class="col-sm-10">
+      <input class="form-control" id="inputUrl" type="text" name="url" placeholder="输入网址（可选）">
+    </div>
+  </div>
+  <!-- Content -->
+  <div class="form-group">
+    <label for="inputContent" class="col-sm-2 control-label">评论内容</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" id="inputContent" type="text" name="content" placeholder="输入评论内容（必需）" required></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-10 col-sm-offset-2" id="msg"></div>
+  </div>
+  <!-- Submit button -->
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">发送评论</button>
+    </div>
+  </div>
+</form>
+</div>
+</div>
+<script type="text/javascript">
+  /** Const definations **/
+  var COMMENT_URL = '{{site_url}}comment/';
+</script>
+
+<!-- Comments end -->

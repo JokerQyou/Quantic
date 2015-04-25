@@ -1,0 +1,47 @@
+{% include 'ghost/general_meta.html' %}
+<body>
+{% include 'ghost/nav_bar.html' %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 edit-main">
+      <table class="table table-striped table-hover">
+        <thead>
+          <th>标题</th>
+          <th>发表时间</th>
+          <th>评论</th>
+          <th>操作</th>
+        </thead>
+        <tbody>
+          {% for post in posts %}
+          <tr>
+            <td><a href="/ghost/editpost/{{post.id}}/">{{post.title}}</a></td>
+            <td>{{post.time|date:"Y年m月d日"}}</td>
+            <td>{{post.comment_number}}</td>
+            <td>
+                <button type="button" data-action="delpost" data-pid="{{post.id}}" class="delpost btn btn-xs">删除</button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="text-center">
+        <ul class="pagination">
+          {% if pager.prev %}
+          <li><a href="/ghost/posts/page/{{pager.prev}}/">{{pager.prev}}</a></li>
+          {% endif %}
+          <li class="active"><a href="/ghost/posts/page/{{pager.current}}/">{{pager.current}}</a></li>
+          {% if pager.next %}
+          <li><a href="/ghost/posts/page/{{pager.next}}/">{{pager.next}}</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+var POST_DELETE = '/ghost/deletepost/';
+</script>
+
+{% include 'blog/footer.html' %}
+{% include 'ghost/foot.html' %}

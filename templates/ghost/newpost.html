@@ -1,0 +1,95 @@
+{% include 'ghost/general_meta.html' %}
+<body>
+{% include 'ghost/nav_bar.html' %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 edit-main">
+      <form action="/ghost/savepost/" method="post" accept-charset="utf-8" id="post-editor">
+        {% csrf_token %}
+        {% if post %}
+        <input type="hidden" name="id" value="{{post.id}}">
+        {% endif %}
+        <div class="form-group">
+          <input class="form-control" type="text" autocomplete="off" name="title" value="{% if post %}{{post.title}}{% endif %}" placeholder="Title" required>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" rows="20" name="content" placeholder="Content" required>{% if post %}{{post.content}}{% endif %}</textarea>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-7">
+                    <input data-role="tagsinput" class="form-control" type="text" name="tags" value="{% if post %}{% for t in tag %}{{t.text}}{% if not forloop.last %},{% endif %}{% endfor %}{% else %}默认{% endif %}" placeholder="Tags" required>
+                </div>
+                <div class="col-xs-5">
+                    <button type="button" class="btn btn-primary form-control" data-toggle="modal" data-target="#qiniuUploadModal">
+                        <i class="glyphicon glyphicon-cloud-upload"></i>
+                        上传文件
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-5">
+              <input class="form-control" type="text" value="{% if post %}{{post.slug}}{% endif %}" name="slug" placeholder="slug">
+            </div>
+            <div class="col-xs-4">
+              <div class="input-group">
+                <input class="form-control form_datetime" type="text" name="time" value="{% if post %}{{post.time|date:'Y/m/d H:i:s'}}{% else %}{{time|date:'Y/m/d H:i:s'}}{% endif %}" placeholder="Time" required readonly>
+                <span class="input-group-addon">
+                  <i class="glyphicon glyphicon-calendar" type="button"></i>
+                </span>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <button class="form-control btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" id="msg"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- File upload modal -->
+<div id="qiniuUploadModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">上传文件</h4>
+      </div>
+      <div class="modal-body">
+        <form id="qiniuUploadForm" class="form-horizontal" action="//up.qiniu.com/" enctype="multipart/form-data" method="POST" target="">
+          <input type="hidden" name="key" value="">
+          <input type="hidden" name="token" value="{{QINIU_UPLOAD_TOKEN}}">
+          <input type="file" class="hidden" name="file" value="" accept="image/*">
+          <div class="form-group">
+            <button type="button" class="btn btn-primary form-control block" id="fakeFileSelect">
+              <i class="glyphicon glyphicon-floppy-open"></i>
+                  选择文件
+            </button>
+            <input type="hidden" name="x:framename" value="">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary form-control block">
+              <i class="glyphicon glyphicon-cloud-upload"></i>
+                  开始上传
+            </button>
+          </div>
+          <div class="form-group">
+            <div class="form-control" id="msg"></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+{% include 'blog/footer.html' %}
+{% include 'ghost/foot.html' %}

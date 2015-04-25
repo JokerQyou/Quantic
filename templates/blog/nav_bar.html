@@ -1,0 +1,20 @@
+<!-- Navigation bar start -->
+<div class="blog-masthead">
+  <div class="container">
+    <nav class="blog-nav">
+      <a class="blog-nav-item" href="{{site_url}}">{{site_name}}</a>
+      {% for link in page_links %}
+        {% if link.current %}
+        <a class="blog-nav-item active" href="{{site_url}}pages/{{link.link}}">{{link.text}}</a>
+        {% else %}
+        <a class="blog-nav-item" href="{{site_url}}pages/{{link.link}}">{{link.text}}</a>
+        {% endif %}
+      {% endfor %}
+      <a class="blog-nav-item" href="{{site_url}}feed/" data-toggle="tooltip" data-placement="bottom" title="订阅本站">Feed</a>
+      <a href="javascript:void(0)" class="blog-nav-item pull-right" id="top" data-toggle="tooltip" data-placement="bottom" title="返回顶部">
+        <i class="glyphicon glyphicon-chevron-up"></i>
+      </a>
+    </nav>
+  </div>
+</div>
+<!-- Navigation bar end -->

@@ -1,0 +1,37 @@
+{% include 'blog/general_meta.html' %}
+<body>
+{% include 'blog/nav_bar.html' %}
+    <div class="container">
+
+      <div class="blog-header">
+        <h1 class="blog-title">{{site_name}}</h1>
+        <p class="lead blog-description">{{site_description}}</p>
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-8 blog-main">
+
+            <form action="{{site_url}}subscribe/" method="post" accept-charset="utf-8" id="mail-form" class="well">
+                <h4>{{page_title}}</h4>
+                {% csrf_token %}
+                <div class="form-group" id="msg"></div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="email" name="email" value="" placeholder="输入您的 Email 地址" class="form-control" required>
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary">确定</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+
+        </div><!-- /.blog-main -->
+
+        {% include 'blog/sidebar.html' %}
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+{% include 'blog/footer.html' %}
+</body>
+{% include 'blog/foot.html' %}

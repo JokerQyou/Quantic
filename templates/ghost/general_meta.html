@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="My Nook - Blog of Joker Qyou">
+    <meta name="author" content="Joker Qyou">
+
+    <title>{{page_title}} - {{site_name}}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Pace script and styles -->
+    <link rel="stylesheet" href="{{STATIC_CDN}}pace.ci.css">
+    <script type="text/javascript" src="{{STATIC_CDN}}pace.min.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="{{STATIC_CDN}}blog/blog.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{STATIC_CDN}}bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="{{STATIC_CDN}}bootstrap-tagsinput.css">
+    {% if editor %}
+    <!-- Markdown editor style -->
+    <style type="text/css">
+        @font-face {
+            font-family: 'icomoon';
+            src:url('{{STATIC_CDN}}font/icomoon.eot');
+            src:url('{{STATIC_CDN}}font/icomoon.eot?#iefix') format('embedded-opentype'),
+                url('{{STATIC_CDN}}font/icomoon.woff') format('woff'),
+                url('{{STATIC_CDN}}font/icomoon.ttf') format('truetype'),
+                url('{{STATIC_CDN}}font/icomoon.svg#icomoon') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
+    <link rel="stylesheet" href="{{STATIC_CDN}}editor.css">
+    {% endif %}
+    <style type="text/css">
+      body {margin-top: 30px;}
+      textarea[name="content"] {resize: vertical;}
+      .btn-primary .glyphicon, .btn-success .glyphicon, .btn-info .glyphicon, .btn-warning .glyphicon, .btn-danger .glyphicon {
+        color: #fff;
+      }
+      .bootstrap-tagsinput {display: block; width: 100%; border-radius: 0;}
+      span[data-role="remove"] {font-family: Monaco, Menlo, Consolas, "Courier New", monospace;}
+      .tag {border-radius: 0; background-color: #428bca; font-weight: normal;}
+      .comment .msg {padding-top: 15px;}
+      span#approved {color: #3c763d;}
+      span#pending {color: #8a6d3b;}
+      span#spam {color: #a94442;}
+      span.count {color: #428bca; padding: 0 4px;}
+    </style>
+    <script type="text/javascript">
+        var SPAM_REPORT = null;
+        var COMMENT_DELETE = null;
+        var POST_DELETE = null;
+    </script>
+  </head>

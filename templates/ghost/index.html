@@ -1,0 +1,83 @@
+{% include 'ghost/general_meta.html' %}
+<body>
+{% include 'ghost/nav_bar.html' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 edit-main">
+            <div class="list-group post-comments">
+                <div class="list-group-item comment">
+                    <span><i class="glyphicon glyphicon-stats"></i> 统计信息</span>
+                    <span class="pull-right"><span class="count">{{summary.comment_number}}</span>条评论</span>
+                </div>
+                <div class="list-group-item comment">
+                    <span><span class="count">{{summary.post_number}}</span>篇文章</span>
+                    <span id="approved" class="pull-right"><span class="count">{{summary.approved_comment_number}}</span>条评论已通过检查</span>
+                </div>
+                <div class="list-group-item comment">
+                    <span><span class="count">{{summary.page_number}}</span>个页面</span>
+                    <span id="pending" class="pull-right"><span class="count">{{summary.pending_comment_number}}</span>条评论等待检查</span>
+                </div>
+                <div class="list-group-item comment">
+                    <span><span class="count">{{summary.tag_number}}</span>个标签</span>
+                    <span id="spam" class="pull-right"><span class="count">{{summary.spam_comment_number}}</span>条垃圾评论</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 edit-main">
+            <div class="list-group post-comments">
+                <div class="list-group-item comment">
+                    <i class="glyphicon glyphicon-user"></i> {{author.name}}，欢迎回来！
+                </div>
+                <div class="list-group-item comment">
+                    <i class="glyphicon glyphicon-map-marker"></i> 您当前登录IP是<code id="user-ip">{{summary.ip_address}}</code>
+                </div>
+                <div class="list-group-item comment">
+                    {% if summary.weibo_expired %}
+                    <i class="glyphicon glyphicon-warning-sign"></i>
+                    {% else %}
+                    <i class="glyphicon glyphicon-share"></i>
+                    {% endif %} 微博授权
+                    {% if summary.weibo_expired %}已失效，<a href="{{summary.weibo_auth_url}}" target="_blank">点此授权</a>{% else %}有效期至{{summary.weibo_expire_time|date:"Y年m月d日 H:i:s"}}{% endif %}
+                </div>
+                <div class="list-group-item comment">
+                    <i class="glyphicon glyphicon-cloud"></i> 博客程序版本：{{summary.version_string}}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 edit-main">
+            <div class="list-group post-comments">
+                <div class="list-group-item comment">
+                    <i class="glyphicon glyphicon-comment"></i> 最近评论
+                </div>
+                {% for comment in summary.recent_comments %}
+                <div class="list-group-item comment">
+                    <a href="/ghost/comments/">{{comment.author.name}}在《{{comment.post.title}}》下的评论，发表于{{comment.time|date:"Y年m月d日"}}</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-6 edit-main">
+            <div class="list-group post-comments">
+                <div class="list-group-item comment">
+                    <i class="glyphicon glyphicon-tasks"></i> 你可能想要……
+                </div>
+                <div class="list-group-item comment">
+                    <a href="/ghost/newpost/"><i class="glyphicon glyphicon-edit"></i> 写一篇文章</a>
+                </div>
+                <div class="list-group-item comment">
+                    <a href="/ghost/posts/"><i class="glyphicon glyphicon-list"></i> 编辑历史文章</a>
+                </div>
+                <div class="list-group-item comment">
+                    <a href="/ghost/comments/"><i class="glyphicon glyphicon-comment"></i> 管理评论</a>
+                </div>
+                <div class="list-group-item comment">
+                    <a href="/ghost/me/"><i class="glyphicon glyphicon-user"></i> 修改个人资料</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'blog/footer.html' %}
+{% include 'ghost/foot.html' %}
