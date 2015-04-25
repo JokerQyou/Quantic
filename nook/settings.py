@@ -7,12 +7,7 @@ from os import environ
 LOCAL = not 'SERVER_SOFTWARE' in environ
 if LOCAL:
     # 本地数据库设置
-    MYSQL_DB = ''
-    MYSQL_USER = ''
-    MYSQL_PASS = ''
-    MYSQL_HOST_M = '127.0.0.1'
-    MYSQL_HOST_S = '127.0.0.1'
-    MYSQL_PORT = '3306'
+    SQLITE_FILE = 'database.db'
 else: 
     # 线上则使用 SAE 模块
     import sae.const
@@ -76,17 +71,25 @@ WEIBO_API_SECRET = ''
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': MYSQL_DB,                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': MYSQL_USER,
-        'PASSWORD': MYSQL_PASS,
-        'HOST': MYSQL_HOST_M,                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': MYSQL_PORT,                      # Set to empty string for default.
+if LOCAL:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': SQLITE_FILE,                      # Or path to database file if using sqlite3.
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': MYSQL_DB,                      # Or path to database file if using sqlite3.
+            # The following settings are not used with sqlite3:
+            'USER': MYSQL_USER,
+            'PASSWORD': MYSQL_PASS,
+            'HOST': MYSQL_HOST_M,                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+            'PORT': MYSQL_PORT,                      # Set to empty string for default.
+        }
+    }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -150,7 +153,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = ''
+SECRET_KEY = '123456789'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
